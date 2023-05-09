@@ -1,37 +1,46 @@
-import { Drawer, Menu } from "antd";
-import React from "react";
+import { Menu } from "antd";
 import {
     ExperimentOutlined,
     UserOutlined,
     LineChartOutlined,
     BulbOutlined,
 } from "@ant-design/icons";
+import { Link, useLocation } from "react-router-dom";
 
 const items = [
     {
-        label: "Podsumowanie",
-        key: "summary",
+        label: <Link to="/">Podsumowanie</Link>,
+        key: "/",
         icon: <LineChartOutlined />,
     },
     {
-        label: "Pacjenci",
-        key: "patients",
+        label: <Link to="/patients">Pacjenci</Link>,
+        key: "/patients",
         icon: <UserOutlined />,
     },
     {
-        label: "Projekty",
-        key: "projects",
+        label: <Link to="/projects">Projekty</Link>,
+        key: "/projects",
         icon: <BulbOutlined />,
     },
     {
-        label: "Badania",
-        key: "research",
+        label: <Link to="/research">Badania</Link>,
+        key: "/research",
         icon: <ExperimentOutlined />,
     },
 ];
 function AppMenu({ isDrawer = false }) {
+    const location = useLocation();
+    const { pathname } = location;
+
     return (
-        <Menu className="menu" items={items} theme="dark" mode={isDrawer ? "inline" : "horizontal"}/>
+        <Menu
+            className="menu"
+            theme="dark"
+            items={items}
+            mode={isDrawer ? "inline" : "horizontal"}
+            selectedKeys={pathname}
+        />
     );
 }
 

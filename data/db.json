@@ -1,0 +1,52 @@
+{
+    "patients": [
+        {
+            "id": 1,
+            "key": 1,
+            "name": "Grzegorz",
+            "surname": "Brzęczyszczykiewicz",
+            "birthDate": "1992-02-02",
+            "country": "Polska",
+            "city": "Wrocław",
+            "street": "Goździkowa",
+            "building": 6,
+            "apartment": 12,
+            "gender": "M",
+            "phoneNumber": 123444122,
+            "martialStatus": "kawaler",
+            "profession": "bezrobotny"
+        },
+        {
+            "id": 2,
+            "key": 2,
+            "name": "Adam",
+            "surname": "Kowalski",
+            "birthDate": "1987-11-03",
+            "country": "Polska",
+            "city": "Poznań",
+            "street": "Fiołkowa",
+            "building": 2,
+            "apartment": 4,
+            "gender": "M",
+            "phoneNumber": 125575321,
+            "martialStatus": "żonaty",
+            "profession": "informatyk"
+        },
+        {
+            "id": 3,
+            "key": 3,
+            "name": "Agata",
+            "surname": "Tarasewicz",
+            "birthDate": "1993-09-11",
+            "country": "Polska",
+            "city": "Warszawa",
+            "street": "Lukrecjowa",
+            "building": 3,
+            "apartment": 7,
+            "gender": "K",
+            "phoneNumber": 657575321,
+            "martialStatus": "panna",
+            "profession": "księgowa"
+        }
+    ]
+}
