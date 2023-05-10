@@ -23,6 +23,7 @@ function Navigation() {
                 open={openDrawer}
                 closable={false}
                 onClose={() => setOpenDrawer(false)}
+                width="75%"
             >
                 <AppMenu isDrawer={true} />
             </Drawer>

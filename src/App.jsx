@@ -30,7 +30,7 @@ function App() {
     return (
             <div className="App">
                 {contextHolder}
-                <AppRouter patients={patients} setPatients={setPatients} />
+                <AppRouter patients={patients} setPatients={setPatients} promptError={promptError} />
             </div>
     );
 }

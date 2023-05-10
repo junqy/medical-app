@@ -2,7 +2,19 @@
     min-height: 100vh;
 }
 
+.header-small {
+    padding: 20px;
+}
+
+.content-small,
+.content {
+    color: white;
+}
+
+.content-small {
+    padding: 20px;
+}
+
 .content {
     padding: 20px 50px;
-    color: white;
 }
