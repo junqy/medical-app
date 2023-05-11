@@ -1,18 +1,33 @@
-import { Button, Space } from "antd";
+import { Button, Modal, Space } from "antd";
 import useTableFilter from "../../hooks/useTableFilter";
 import CommonTable from "../common_table/CommonTable";
-import { deletePatient } from "../../api/services/patientsService";
-import errorHandler from "../../api/errorHandler";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { useState } from "react";
+import CommonForm from "../common_form/CommonForm";
+import { serializeDate } from "../../utils/serializers/patientsSerializer";
 
-function PatientsTable({ patients, setPatients, promptError }) {
+function PatientsTable({
+    patients,
+    setPatients,
+    promptError,
+    removePatient,
+    editPatient,
+    inputs,
+    formSubmited,
+    setFormSubmited,
+}) {
     const getColumnSearchProps = useTableFilter();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editItem, setEditItem] = useState(null)
 
-    const removePatient = async (id) => {
-        await deletePatient(id).then(() => {
-            const patientsList = patients.filter(patient => patient.id !== id);
-            setPatients(patientsList)
-        }).catch((err) => errorHandler(err, promptError))
+    const handleEdit = (data) => {
+        setEditItem(serializeDate(data))
+        setIsModalOpen(true)
+    }
+
+    const onClose = () => {
+        setEditItem(null)
+        setIsModalOpen(false)
     }
 
     const columns = [
@@ -120,14 +135,42 @@ function PatientsTable({ patients, setPatients, promptError }) {
             key: "options",
             render: (record) => (
                 <Space size="middle">
-                    <Button shape="circle" icon={<EditFilled />} onClick={() => console.log("edit")} />
-                    <Button danger shape="circle" icon={<DeleteFilled />} onClick={() => removePatient(record.id)} />
+                    <Button
+                        shape="circle"
+                        icon={<EditFilled />}
+                        onClick={() => handleEdit(record)}
+                    />
+                    <Button
+                        danger
+                        shape="circle"
+                        icon={<DeleteFilled />}
+                        onClick={() => removePatient(record.id)}
+                    />
                 </Space>
             ),
         },
     ];
-    
-    return <CommonTable data={patients} columns={columns} />;
+
+    return (
+        <>
+            <CommonTable data={patients} columns={columns} />
+            <Modal
+                open={isModalOpen}
+                title="Edytuj dane pacjenta"
+                onCancel={() => onClose()}
+                footer={null}
+            >
+                <CommonForm
+                    inputs={inputs}
+                    formSubmited={formSubmited}
+                    setFormSubmited={setFormSubmited}
+                    handleSubmit={editPatient}
+                    editItem={editItem}
+                    onCloseModal={onClose}
+                />
+            </Modal>
+        </>
+    );
 }
 
 export default PatientsTable;

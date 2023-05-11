@@ -5,10 +5,12 @@ import { getPatients } from "./api/services/patientsService";
 import { useEffect } from "react";
 import errorHandler from "./api/errorHandler";
 import React, { useState } from "react";
+import { getProjects } from "./api/services/projectsService";
 
 function App() {
     const [messageApi, contextHolder] = message.useMessage();
     const [patients, setPatients] = useState([]);
+    const [projects, setProjects] = useState([])
 
     const promptError = (message) => {
         messageApi.open({
@@ -19,6 +21,7 @@ function App() {
 
     useEffect(() => {
         getAllPatients();
+        getAllProjects();
     }, []);
 
     const getAllPatients = async () => {
@@ -27,11 +30,23 @@ function App() {
             .catch((err) => errorHandler(err, promptError));
     };
 
+    const getAllProjects = async () => {
+        await getProjects()
+            .then((response) => setProjects(response.data))
+            .catch((err) => errorHandler(err, promptError));
+    };
+
     return (
-            <div className="App">
-                {contextHolder}
-                <AppRouter patients={patients} setPatients={setPatients} promptError={promptError} />
-            </div>
+        <div className="App">
+            {contextHolder}
+            <AppRouter
+                patients={patients}
+                setPatients={setPatients}
+                projects={projects}
+                setProjects={setProjects}
+                promptError={promptError}
+            />
+        </div>
     );
 }
 

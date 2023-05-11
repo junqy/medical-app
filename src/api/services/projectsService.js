@@ -1,19 +1,19 @@
 import apiInstance from "../api";
 
-const url = '/patients'
+const url = '/projects'
 
-export const getPatients = async () => {
+export const getProjects = async () => {
     return await apiInstance.get(url)
 }
 
-export const deletePatient = async (id) => {
+export const deleteProject = async (id) => {
     return await apiInstance.delete(`${url}/${id}`)
 }
 
-export const postPatient = async (data) => {
+export const postProject = async (data) => {
     return await apiInstance.post(url, data)
 }
 
-export const updatePatient = async (id, data) => {
+export const updateProject = async (id, data) => {
     return await apiInstance.put(`${url}/${id}`, data)
 }

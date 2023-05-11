@@ -1,13 +1,48 @@
 import { CalendarOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Input, Select, Space } from "antd";
-import { useState } from "react";
+import {
+    Button,
+    DatePicker,
+    Form,
+    Input,
+    Select,
+    InputNumber,
+    Grid,
+} from "antd";
+import dayjs from "dayjs";
+import { useEffect } from "react";
 const { Option } = Select;
+const { useBreakpoint } = Grid;
 
-const CommonForm = ({ inputs, addItem }) => {
+const CommonForm = ({
+    inputs,
+    handleSubmit,
+    formSubmited,
+    setFormSubmited,
+    editItem,
+    onCloseModal,
+}) => {
+    const breakpoints = useBreakpoint();
     const [form] = Form.useForm();
+    const dateFormat = "YYYY-MM-DD";
+
+    useEffect(() => {
+        form.resetFields();
+    }, [editItem]);
+
     const onFinish = (values) => {
-        console.log("Received values of form: ", values);
-        addItem(values)
+        handleSubmit(
+            editItem
+                ? { ...editItem, ...values }
+                : values
+        );
+        if (editItem) {
+            form.resetFields();
+            onCloseModal();
+        }
+        if (formSubmited) {
+            form.resetFields();
+            setFormSubmited(false);
+        }
     };
 
     const items = inputs.map((input) => {
@@ -36,6 +71,11 @@ const CommonForm = ({ inputs, addItem }) => {
                         style={{
                             width: "100%",
                         }}
+                        format={dateFormat}
+                        disabledDate={
+                            input.name === "birthDate" &&
+                            ((current) => current.isAfter(dayjs()))
+                        }
                     />
                 </Form.Item>
             );
@@ -55,6 +95,22 @@ const CommonForm = ({ inputs, addItem }) => {
                     </Select>
                 </Form.Item>
             );
+        } else if (input.type === "number") {
+            return (
+                <Form.Item
+                    key={input.label}
+                    name={input.name}
+                    rules={input.rules}
+                >
+                    <InputNumber
+                        placeholder={input.label}
+                        style={{
+                            width: "100%",
+                        }}
+                        min={0}
+                    />
+                </Form.Item>
+            );
         }
     });
     return (
@@ -64,11 +120,14 @@ const CommonForm = ({ inputs, addItem }) => {
             onFinish={onFinish}
             scrollToFirstError
             style={{ width: "100%" }}
+            initialValues={editItem}
         >
             <div
                 style={{
                     display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
+                    gridTemplateColumns: breakpoints.xs
+                        ? "1fr 1fr"
+                        : "1fr 1fr 1fr",
                     columnGap: "20px",
                 }}
             >

@@ -32,7 +32,16 @@ function AppRouter(props) {
                             />
                         }
                     />
-                    <Route path="/projects" element={<Projects />} />
+                    <Route
+                        path="/projects"
+                        element={
+                            <Projects
+                                projects={props.projects}
+                                setProjects={props.setProjects}
+                                promptError={props.promptError}
+                            />
+                        }
+                    />
                     <Route path="/research" element={<Research />} />
                 </Routes>
             </Content>
