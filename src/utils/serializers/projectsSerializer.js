@@ -6,8 +6,6 @@ const dateFormat = "YYYY-MM-DD";
 export const serializeProject = (data) => {
     const currentDate = new Date();
 
-    console.log(data)
-
     const serializedObject = {
         id: data.id ? data.id : uuidv4(),
         key: data.key ? data.key : uuidv4(),
@@ -18,8 +16,6 @@ export const serializeProject = (data) => {
         endDate: data.endDate ? data.endDate : null,
         ...data,
     };
-
-    console.log(serializedObject)
 
     serializedObject.startDate = serializedObject.startDate.format(dateFormat);
     serializedObject.endDate =
@@ -38,5 +34,24 @@ export const serializeDate = (data) => {
         ? dayjs(data.endDate, dateFormat)
         : null;
 
-    return serializedObject
+    return serializedObject;
+};
+
+export const serializeToFinish = (data) => {
+    const currentDate = new Date();
+
+    const serializedObject = {
+        ...data,
+        endDate: data.endDate ? data.endDate : dayjs(currentDate),
+        isFinished: true,
+    };
+
+    serializedObject.endDate =
+        typeof serializedObject.endDate === typeof dayjs(currentDate)
+            ? serializedObject.endDate.format(dateFormat)
+            : null;
+
+    serializedObject.isFinished = serializedObject.endDate ? true : false;
+
+    return serializedObject;
 };

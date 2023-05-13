@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { DeleteFilled, EditFilled, CheckOutlined, PlayCircleOutlined } from "@ant-design/icons";
 import { Button, Modal, Space } from "antd";
 import useTableFilter from "../../hooks/useTableFilter";
 import CommonTable from "../common_table/CommonTable";
@@ -10,6 +10,7 @@ function ProjectsTable({
     projects,
     removeProject,
     editProject,
+    finishProject,
     inputs,
     formSubmited,
     setFormSubmited,
@@ -96,6 +97,11 @@ function ProjectsTable({
                         shape="circle"
                         icon={<EditFilled />}
                         onClick={() => handleEdit(record)}
+                    />
+                    <Button
+                        shape="circle"
+                        icon={record.isFinished ? <PlayCircleOutlined /> : <CheckOutlined />}
+                        onClick={() => finishProject(record)}
                     />
                     <Button
                         danger

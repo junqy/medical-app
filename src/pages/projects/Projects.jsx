@@ -11,7 +11,7 @@ import {
     postProject,
     updateProject,
 } from "../../api/services/projectsService";
-import { serializeProject } from "../../utils/serializers/projectsSerializer";
+import { serializeProject, serializeToFinish } from "../../utils/serializers/projectsSerializer";
 
 function Projects({ projects, setProjects, promptError }) {
     const [formVisible, setFormVisible] = useState(false);
@@ -54,6 +54,21 @@ function Projects({ projects, setProjects, promptError }) {
             })
             .catch((err) => errorHandler(err, promptError));
     };
+
+    const finishProject = async (data) => {
+        const serializedProject = serializeToFinish(data)
+        await updateProject(serializedProject.id, serializedProject)
+        .then((response) => {
+            setProjects(
+                projects.map((project) =>
+                    project.id === serializedProject.id
+                        ? { ...response.data }
+                        : project
+                )
+            );
+        })
+        .catch((err) => errorHandler(err, promptError));
+    }
 
     return (
         <>
@@ -98,6 +113,7 @@ function Projects({ projects, setProjects, promptError }) {
                         projects={projects}
                         removeProject={removeProject}
                         editProject={editProject}
+                        finishProject={finishProject}
                         inputs={inputs}
                         formSubmited={formSubmited}
                         setFormSubmited={setFormSubmited}
