@@ -1,10 +1,17 @@
 import React, { useState } from "react";
-import { DeleteFilled, EditFilled, CheckOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import {
+    DeleteFilled,
+    EditFilled,
+    CheckOutlined,
+    PlayCircleOutlined,
+    UnorderedListOutlined
+} from "@ant-design/icons";
 import { Button, Modal, Space } from "antd";
-import useTableFilter from "../../hooks/useTableFilter";
 import CommonTable from "../common_table/CommonTable";
 import { serializeDate } from "../../utils/serializers/projectsSerializer";
 import CommonForm from "../common_form/CommonForm";
+import useColumnGenerator from "../../hooks/useColumnGenerator";
+import { projectsColumns } from "./projectsData";
 
 function ProjectsTable({
     projects,
@@ -14,8 +21,9 @@ function ProjectsTable({
     inputs,
     formSubmited,
     setFormSubmited,
+    setSelectedProject,
 }) {
-    const getColumnSearchProps = useTableFilter();
+    const generateColumns = useColumnGenerator();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editItem, setEditItem] = useState(null);
 
@@ -30,64 +38,7 @@ function ProjectsTable({
     };
 
     const columns = [
-        {
-            title: "Nazwa",
-            dataIndex: "name",
-            key: "name",
-            ...getColumnSearchProps("name", "Nazwa"),
-            sorter: (a, b) => a.name.localeCompare(b.name),
-            sortDirections: ["descend", "ascend"],
-        },
-        {
-            title: "Założyciel",
-            dataIndex: "founder",
-            key: "founder",
-            ...getColumnSearchProps("founder", "Założyciel"),
-            sorter: (a, b) => a.founder.localeCompare(b.founder),
-            sortDirections: ["descend", "ascend"],
-        },
-        {
-            title: "Data Startu",
-            dataIndex: "startDate",
-            key: "startDate",
-            ...getColumnSearchProps("startDate", "Data Startu"),
-            sorter: (a, b) => Date.parse(a.startDate) - Date.parse(b.startDate),
-            sortDirections: ["descend", "ascend"],
-        },
-        {
-            title: "Data Zakończenia",
-            dataIndex: "endDate",
-            key: "endDate",
-            ...getColumnSearchProps("endDate", "Data Zakończenia"),
-            sorter: (a, b) => Date.parse(a.endDate) - Date.parse(b.endDate),
-            sortDirections: ["descend", "ascend"],
-        },
-        {
-            title: "Typ",
-            dataIndex: "type",
-            key: "type",
-            ...getColumnSearchProps("type", "Typ"),
-            sorter: (a, b) => a.type.localeCompare(b.type),
-            sortDirections: ["descend", "ascend"],
-        },
-        {
-            title: "Zakończony",
-            dataIndex: "isFinished",
-            key: "isFinished",
-            ...getColumnSearchProps("isFinished", "Zakończony"),
-            sorter: (a, b) => a.isFinished - b.isFinished,
-            sortDirections: ["descend", "ascend"],
-            render: (record) => (record === true ? "Tak" : "Nie"),
-        },
-        {
-            title: "Liczba Pacjentów",
-            dataIndex: "patients",
-            key: "patients",
-            ...getColumnSearchProps("patients", "Ulica"),
-            sorter: (a, b) => a.patients - b.patients,
-            sortDirections: ["descend", "ascend"],
-            render: (record) => record?.length,
-        },
+        ...generateColumns(projectsColumns),
         {
             title: "Opcje",
             key: "options",
@@ -100,8 +51,19 @@ function ProjectsTable({
                     />
                     <Button
                         shape="circle"
-                        icon={record.isFinished ? <PlayCircleOutlined /> : <CheckOutlined />}
+                        icon={
+                            record.isFinished ? (
+                                <PlayCircleOutlined />
+                            ) : (
+                                <CheckOutlined />
+                            )
+                        }
                         onClick={() => finishProject(record)}
+                    />
+                    <Button
+                        shape="circle"
+                        icon={<UnorderedListOutlined />}
+                        onClick={() => setSelectedProject(record)}
                     />
                     <Button
                         danger

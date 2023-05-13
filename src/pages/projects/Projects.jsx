@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Row, Button, Card } from "antd";
+import { Col, Row, Button, Card, Divider } from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import PatientsTable from "../../components/patients/PatientsTable";
 import CommonForm from "../../components/common_form/CommonForm";
@@ -11,11 +11,16 @@ import {
     postProject,
     updateProject,
 } from "../../api/services/projectsService";
-import { serializeProject, serializeToFinish } from "../../utils/serializers/projectsSerializer";
+import {
+    serializeProject,
+    serializeToFinish,
+} from "../../utils/serializers/projectsSerializer";
+import PatientsInProjectTable from "../../components/projects/PatientsInProjectTable";
 
-function Projects({ projects, setProjects, promptError }) {
+function Projects({ projects, setProjects, promptError, patients }) {
     const [formVisible, setFormVisible] = useState(false);
     const [formSubmited, setFormSubmited] = useState(false);
+    const [selectedProject, setSelectedProject] = useState(null);
 
     const addProject = async (data) => {
         const serializedProject = serializeProject(data);
@@ -55,20 +60,35 @@ function Projects({ projects, setProjects, promptError }) {
             .catch((err) => errorHandler(err, promptError));
     };
 
+    const changeAgreement = async (data) => {
+        await updateProject(data.id, data)
+            .then((response) => {
+                setProjects(
+                    projects.map((project) =>
+                        project.id === data.id
+                            ? { ...response.data }
+                            : project
+                    )
+                );
+                setSelectedProject({...response.data})
+            })
+            .catch((err) => errorHandler(err, promptError));
+    };
+
     const finishProject = async (data) => {
-        const serializedProject = serializeToFinish(data)
+        const serializedProject = serializeToFinish(data);
         await updateProject(serializedProject.id, serializedProject)
-        .then((response) => {
-            setProjects(
-                projects.map((project) =>
-                    project.id === serializedProject.id
-                        ? { ...response.data }
-                        : project
-                )
-            );
-        })
-        .catch((err) => errorHandler(err, promptError));
-    }
+            .then((response) => {
+                setProjects(
+                    projects.map((project) =>
+                        project.id === serializedProject.id
+                            ? { ...response.data }
+                            : project
+                    )
+                );
+            })
+            .catch((err) => errorHandler(err, promptError));
+    };
 
     return (
         <>
@@ -117,8 +137,23 @@ function Projects({ projects, setProjects, promptError }) {
                         inputs={inputs}
                         formSubmited={formSubmited}
                         setFormSubmited={setFormSubmited}
+                        setSelectedProject={setSelectedProject}
                     />
                 </Col>
+                {!!selectedProject && (
+                    <>
+                        <Col span={24}>
+                            <Divider>{selectedProject?.name}</Divider>
+                        </Col>
+                        <Col span={24}>
+                            <PatientsInProjectTable
+                                selectedProject={selectedProject}
+                                patients={patients}
+                                changeAgreement={changeAgreement}
+                            />
+                        </Col>
+                    </>
+                )}
             </Row>
         </>
     );

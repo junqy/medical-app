@@ -39,6 +39,7 @@ function AppRouter(props) {
                                 projects={props.projects}
                                 setProjects={props.setProjects}
                                 promptError={props.promptError}
+                                patients={props.patients}
                             />
                         }
                     />

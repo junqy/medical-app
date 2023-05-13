@@ -7,12 +7,9 @@ function useColumnGenerator() {
     const generateColumns = (data) => {
         const result = data.map((item) => {
             return {
-                title: item.title,
-                dataIndex: item.dataIndex,
-                key: item.key,
                 ...getColumnSearchProps(item.dataIndex, item.title),
-                sorter: item.sorter,
-                sortDirections: ["descend", "ascend"]
+                sortDirections: ["descend", "ascend"],
+                ...item,
             }
         })
 

@@ -1,6 +1,6 @@
 import "./App.css";
 import AppRouter from "./components/app_router/AppRouter";
-import { ConfigProvider, message } from "antd";
+import { message } from "antd";
 import { getPatients } from "./api/services/patientsService";
 import { useEffect } from "react";
 import errorHandler from "./api/errorHandler";

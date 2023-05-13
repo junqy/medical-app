@@ -95,8 +95,6 @@ function Patients({ patients, setPatients, promptError }) {
                 <Col span={24}>
                     <PatientsTable
                         patients={patients}
-                        setPatients={setPatients}
-                        promptError={promptError}
                         removePatient={removePatient}
                         editPatient={editPatient}
                         inputs={inputs}

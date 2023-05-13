@@ -1,5 +1,4 @@
 import { Button, Modal, Space } from "antd";
-import useTableFilter from "../../hooks/useTableFilter";
 import CommonTable from "../common_table/CommonTable";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { useState } from "react";
@@ -10,8 +9,6 @@ import { patientsColumns } from "./patientsData";
 
 function PatientsTable({
     patients,
-    setPatients,
-    promptError,
     removePatient,
     editPatient,
     inputs,

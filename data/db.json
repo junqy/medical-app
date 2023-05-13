@@ -91,6 +91,7 @@
         "2"
       ],
       "agreedPatients": [
+        "3",
         "1"
       ],
       "isFinished": true,
@@ -108,14 +109,14 @@
         "3a7d6676-5349-4a9b-9f02-64a291943ff7"
       ],
       "agreedPatients": [
-        "2",
-        "3a7d6676-5349-4a9b-9f02-64a291943ff7"
+        "3a7d6676-5349-4a9b-9f02-64a291943ff7",
+        "2"
       ],
       "isFinished": false,
       "startDate": "2023-05-02",
       "endDate": null,
       "name": "Aparaty słuchowe",
-      "founder": "Adam Leśniak",
+      "founder": "Adam Leśniawski",
       "type": "Naukowy"
     },
     {

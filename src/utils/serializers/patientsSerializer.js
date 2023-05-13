@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 const dateFormat = 'YYYY-MM-DD';
 
 export const serializePatient = (data) => {
-    //console.log(data)
     const serializedObject = {
         id: data.id ? data.id : uuidv4(),
         key: data.key ? data.key : uuidv4(),
@@ -12,7 +11,6 @@ export const serializePatient = (data) => {
     }
 
     serializedObject.birthDate = data.birthDate.format(dateFormat)
-    //console.log(serializedObject)
 
     return serializedObject;
 };

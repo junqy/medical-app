@@ -1,7 +1,8 @@
 import React from "react";
 import { Table } from "antd";
+import "./styles.css";
 
-function CommonTable({ columns, data }) {
+function CommonTable({ columns, data, isAgreement }) {
     return (
         <Table
             locale={{
@@ -15,6 +16,12 @@ function CommonTable({ columns, data }) {
             scroll={{
                 x: 1300,
             }}
+            rowClassName={
+                isAgreement
+                    ? (record) =>
+                          record.agreement === true ? "green-row" : "red-row"
+                    : null
+            }
         />
     );
 }
