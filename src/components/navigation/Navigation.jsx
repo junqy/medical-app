@@ -12,7 +12,7 @@ function Navigation() {
 
     return (
         <>
-            {breakpoints.xs ? (
+            {!breakpoints.md ? (
                 <div className="icon-container">
                     <MenuOutlined className="hamburger-icon" onClick={() => setOpenDrawer(true)}/>
                 </div>

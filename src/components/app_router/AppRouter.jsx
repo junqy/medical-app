@@ -7,6 +7,7 @@ import Summary from "../../pages/summary/Summary";
 import Patients from "../../pages/patients/Patients";
 import Projects from "../../pages/projects/Projects";
 import Research from "../../pages/research/Research";
+import Orders from "../../pages/orders/Orders";
 
 const { useBreakpoint } = Grid;
 const { Header, Content, Footer } = Layout;
@@ -43,7 +44,17 @@ function AppRouter(props) {
                             />
                         }
                     />
-                    <Route path="/research" element={<Research />} />
+                    <Route
+                        path="/research"
+                        element={
+                            <Research
+                                research={props.research}
+                                setResearch={props.setResearch}
+                                promptError={props.promptError}
+                            />
+                        }
+                    />
+                    <Route path="/orders" element={<Orders />} />
                 </Routes>
             </Content>
             <Footer style={{ textAlign: "center" }}>Test</Footer>

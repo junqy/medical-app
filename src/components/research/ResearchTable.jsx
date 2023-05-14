@@ -1,36 +1,36 @@
-import { Button, Modal, Space } from "antd";
-import CommonTable from "../common_table/CommonTable";
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
-import { useState } from "react";
-import CommonForm from "../common_form/CommonForm";
-import { serializeDate } from "../../utils/serializers/patientsSerializer";
+import React, { useState } from "react";
 import useColumnGenerator from "../../hooks/useColumnGenerator";
-import { patientsColumns } from "../../data/patientsData";
+import { researchColumns } from "../../data/researchData";
+import { Button, Space, Modal } from "antd";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import CommonTable from "../common_table/CommonTable";
+import CommonForm from "../common_form/CommonForm";
 
-function PatientsTable({
-    patients,
-    removePatient,
-    editPatient,
-    inputs,
+function ResearchTable({
+    research,
+    removeResearch,
     formSubmited,
     setFormSubmited,
+    editResearch,
+    inputs,
 }) {
     const generateColumns = useColumnGenerator();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editItem, setEditItem] = useState(null)
+    const [editItem, setEditItem] = useState(null);
 
     const handleEdit = (data) => {
-        setEditItem(serializeDate(data))
-        setIsModalOpen(true)
-    }
+        setEditItem(data);
+        setIsModalOpen(true);
+    };
 
     const onClose = () => {
-        setEditItem(null)
-        setIsModalOpen(false)
-    }
+        setEditItem(null);
+        setIsModalOpen(false);
+    };
 
     const columns = [
-        ...generateColumns(patientsColumns),
+        ...generateColumns(researchColumns),
         {
             title: "Opcje",
             key: "options",
@@ -45,19 +45,19 @@ function PatientsTable({
                         danger
                         shape="circle"
                         icon={<DeleteFilled />}
-                        onClick={() => removePatient(record.id)}
+                        onClick={() => removeResearch(record.id)}
                     />
                 </Space>
             ),
         },
-    ]
+    ];
 
     return (
         <>
-            <CommonTable data={patients} columns={columns} />
+            <CommonTable data={research} columns={columns} />
             <Modal
                 open={isModalOpen}
-                title="Edytuj dane pacjenta"
+                title="Edytuj dane projektu"
                 onCancel={() => onClose()}
                 footer={null}
             >
@@ -65,7 +65,7 @@ function PatientsTable({
                     inputs={inputs}
                     formSubmited={formSubmited}
                     setFormSubmited={setFormSubmited}
-                    handleSubmit={editPatient}
+                    handleSubmit={editResearch}
                     editItem={editItem}
                     onCloseModal={onClose}
                 />
@@ -74,4 +74,4 @@ function PatientsTable({
     );
 }
 
-export default PatientsTable;
+export default ResearchTable;

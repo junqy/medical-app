@@ -4,6 +4,7 @@ import {
     UserOutlined,
     LineChartOutlined,
     BulbOutlined,
+    BookOutlined
 } from "@ant-design/icons";
 import { Link, useLocation } from "react-router-dom";
 
@@ -27,6 +28,11 @@ const items = [
         label: <Link to="/research">Badania</Link>,
         key: "/research",
         icon: <ExperimentOutlined />,
+    },
+    {
+        label: <Link to="/orders">Zlecenia</Link>,
+        key: "/orders",
+        icon: <BookOutlined />,
     },
 ];
 function AppMenu({ isDrawer = false }) {

@@ -6,11 +6,13 @@ import { useEffect } from "react";
 import errorHandler from "./api/errorHandler";
 import React, { useState } from "react";
 import { getProjects } from "./api/services/projectsService";
+import { getResearch } from "./api/services/researchService";
 
 function App() {
     const [messageApi, contextHolder] = message.useMessage();
     const [patients, setPatients] = useState([]);
-    const [projects, setProjects] = useState([])
+    const [projects, setProjects] = useState([]);
+    const [research, setResearch] = useState([]);
 
     const promptError = (message) => {
         messageApi.open({
@@ -22,6 +24,7 @@ function App() {
     useEffect(() => {
         getAllPatients();
         getAllProjects();
+        getAllResearch();
     }, []);
 
     const getAllPatients = async () => {
@@ -36,6 +39,12 @@ function App() {
             .catch((err) => errorHandler(err, promptError));
     };
 
+    const getAllResearch = async () => {
+        await getResearch()
+            .then((response) => setResearch(response.data))
+            .catch((err) => errorHandler(err, promptError));
+    };
+
     return (
         <div className="App">
             {contextHolder}
@@ -44,6 +53,8 @@ function App() {
                 setPatients={setPatients}
                 projects={projects}
                 setProjects={setProjects}
+                research={research}
+                setResearch={setResearch}
                 promptError={promptError}
             />
         </div>

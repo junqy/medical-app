@@ -131,3 +131,81 @@ export const inputs = [
         ],
     },
 ];
+
+export const patientsColumns = [
+    {
+        title: "Imię",
+        dataIndex: "name",
+        key: "name",
+        sorter: (a, b) => a.name.localeCompare(b.name),
+    },
+    {
+        title: "Nazwisko",
+        dataIndex: "surname",
+        key: "surname",
+        sorter: (a, b) => a.surname.localeCompare(b.surname),
+    },
+    {
+        title: "Data Urodzenia",
+        dataIndex: "birthDate",
+        key: "birthDate",
+        sorter: (a, b) => Date.parse(a.birthDate) - Date.parse(b.birthDate),
+    },
+    {
+        title: "Kraj",
+        dataIndex: "country",
+        key: "country",
+        sorter: (a, b) => a.country.localeCompare(b.country),
+    },
+    {
+        title: "Miasto",
+        dataIndex: "city",
+        key: "city",
+        sorter: (a, b) => a.city.localeCompare(b.city),
+    },
+    {
+        title: "Ulica",
+        dataIndex: "street",
+        key: "street",
+        sorter: (a, b) => a.street.localeCompare(b.street),
+    },
+    {
+        title: "Budynek",
+        dataIndex: "building",
+        key: "building",
+        width: "5%",
+        sorter: (a, b) => a.building.localeCompare(b.building),
+    },
+    {
+        title: "Mieszkanie",
+        dataIndex: "apartment",
+        key: "apartment",
+        width: "5%",
+        sorter: (a, b) => b.apartment.localeCompare(a.apartment),
+    },
+    {
+        title: "Płeć",
+        dataIndex: "gender",
+        key: "gender",
+        width: "5%",
+        sorter: (a, b) => a.gender.localeCompare(b.gender),
+    },
+    {
+        title: "Numer Telefonu",
+        dataIndex: "phoneNumber",
+        key: "phoneNumber",
+        sorter: (a, b) => a.phoneNumber - b.phoneNumber,
+    },
+    {
+        title: "Stan Cywilny",
+        dataIndex: "martialStatus",
+        key: "martialStatus",
+        sorter: (a, b) => a.martialStatus.localeCompare(b.martialStatus),
+    },
+    {
+        title: "Zawód",
+        dataIndex: "profession",
+        key: "profession",
+        sorter: (a, b) => a.profession.localeCompare(b.profession),
+    },
+]

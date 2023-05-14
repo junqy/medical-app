@@ -2,20 +2,27 @@ import { Button, Space } from "antd";
 import CommonTable from "../common_table/CommonTable";
 import { DeleteFilled, CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import useColumnGenerator from "../../hooks/useColumnGenerator";
-import { patientsColumns } from "../patients/patientsData";
+import { patientsColumns } from "../../data/patientsData";
+import { filterProject } from "../../utils/filterProject";
 import React, { useEffect, useState } from "react";
 
-function PatientsInProjectTable({ patients, selectedProject, changeAgreement }) {
+function PatientsInProjectTable({
+    patients,
+    selectedProject,
+    changeAgreement,
+    projects,
+}) {
     const generateColumns = useColumnGenerator();
     const [patientsData, setPatientsData] = useState([]);
 
     const filterPatients = () => {
+        const filteredProject = filterProject(projects, selectedProject);
         const filteredPatients = patients?.filter((patient) =>
-            selectedProject?.patients.includes(String(patient.id))
+            filteredProject?.patients.includes(String(patient.id))
         );
         filteredPatients.map(
             (patient) =>
-                (patient.agreement = selectedProject?.agreedPatients.includes(
+                (patient.agreement = filteredProject?.agreedPatients.includes(
                     String(patient.id)
                 )
                     ? true
@@ -25,24 +32,37 @@ function PatientsInProjectTable({ patients, selectedProject, changeAgreement }) 
     };
 
     const handleAgreement = (id) => {
-        if (selectedProject?.agreedPatients.includes(String(id))) {
-            const filteredPatients = selectedProject.agreedPatients.filter((item) => item !== String(id))
+        const filteredProject = filterProject(projects, selectedProject);
+        if (filteredProject?.agreedPatients.includes(String(id))) {
+            const filteredPatients = filteredProject.agreedPatients.filter(
+                (item) => item !== String(id)
+            );
             changeAgreement({
-                ...selectedProject,
+                ...filteredProject,
                 agreedPatients: filteredPatients,
-            })
+            });
         } else {
             changeAgreement({
-                ...selectedProject,
-                agreedPatients:
-                    [...selectedProject.agreedPatients, String(id)]
-            })
+                ...filteredProject,
+                agreedPatients: [...filteredProject.agreedPatients, String(id)],
+            });
         }
-    }
+    };
+
+    const removeMembership = (id) => {
+        const filteredProject = filterProject(projects, selectedProject);
+        const filteredPatients = filteredProject.patients.filter(
+            (item) => item !== String(id)
+        );
+        changeAgreement({
+            ...filteredProject,
+            patients: filteredPatients,
+        });
+    };
 
     useEffect(() => {
         filterPatients();
-    }, [selectedProject]);
+    }, [selectedProject, changeAgreement]);
 
     const columns = [
         ...generateColumns(patientsColumns),
@@ -61,9 +81,10 @@ function PatientsInProjectTable({ patients, selectedProject, changeAgreement }) 
                     <Button
                         shape="circle"
                         icon={
-                            selectedProject?.agreedPatients.includes(
-                                String(record.id)
-                            ) ? (
+                            filterProject(
+                                projects,
+                                selectedProject
+                            )?.agreedPatients.includes(String(record.id)) ? (
                                 <CloseOutlined />
                             ) : (
                                 <CheckOutlined />
@@ -71,7 +92,12 @@ function PatientsInProjectTable({ patients, selectedProject, changeAgreement }) 
                         }
                         onClick={() => handleAgreement(record.id)}
                     />
-                    <Button danger shape="circle" icon={<DeleteFilled />} />
+                    <Button
+                        danger
+                        shape="circle"
+                        icon={<DeleteFilled />}
+                        onClick={() => removeMembership(record.id)}
+                    />
                 </Space>
             ),
         },

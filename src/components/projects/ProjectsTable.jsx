@@ -11,7 +11,7 @@ import CommonTable from "../common_table/CommonTable";
 import { serializeDate } from "../../utils/serializers/projectsSerializer";
 import CommonForm from "../common_form/CommonForm";
 import useColumnGenerator from "../../hooks/useColumnGenerator";
-import { projectsColumns } from "./projectsData";
+import { projectsColumns } from "../../data/projectsData";
 
 function ProjectsTable({
     projects,
@@ -63,7 +63,7 @@ function ProjectsTable({
                     <Button
                         shape="circle"
                         icon={<UnorderedListOutlined />}
-                        onClick={() => setSelectedProject(record)}
+                        onClick={() => setSelectedProject(record.id)}
                     />
                     <Button
                         danger
