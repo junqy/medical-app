@@ -24,6 +24,7 @@ function Navigation() {
                 closable={false}
                 onClose={() => setOpenDrawer(false)}
                 width="75%"
+                style={{backgroundColor: "#323031"}}
             >
                 <AppMenu isDrawer={true} />
             </Drawer>
