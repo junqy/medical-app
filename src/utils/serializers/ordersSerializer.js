@@ -3,14 +3,12 @@ import dayjs from "dayjs";
 
 const dateFormat = "YYYY-MM-DD";
 
-export const serializeProject = (data) => {
+export const serializeOrder = (data) => {
     const currentDate = new Date();
 
     const serializedObject = {
         id: data.id ? data.id : uuidv4(),
         key: data.key ? data.key : uuidv4(),
-        patients: data.patients ? data.patients : [],
-        agreedPatients: data.agreedPatients ? data.agreedPatients : [],
         isFinished: data.endDate ? true : false,
         startDate: data.startDate ? data.startDate : dayjs(currentDate),
         endDate: data.endDate ? data.endDate : "",
@@ -41,7 +39,7 @@ export const serializeToFinish = (data) => {
     const currentDate = new Date();
 
     const serializedObject = {
-        ...data,
+        ...data, 
         endDate: data.endDate ? data.endDate : dayjs(currentDate),
         isFinished: true,
     };

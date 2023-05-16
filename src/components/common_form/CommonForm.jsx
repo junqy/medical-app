@@ -52,6 +52,7 @@ const CommonForm = ({
                     key={input.label}
                     name={input.name}
                     rules={input.rules}
+                    hasFeedback
                 >
                     <Input placeholder={input.label} />
                 </Form.Item>
@@ -62,6 +63,7 @@ const CommonForm = ({
                     key={input.label}
                     name={input.name}
                     rules={input.rules}
+                    hasFeedback
                 >
                     <DatePicker
                         placeholder={input.label}
@@ -85,6 +87,7 @@ const CommonForm = ({
                     key={input.label}
                     name={input.name}
                     rules={input.rules}
+                    hasFeedback
                 >
                     <Select placeholder={input.label}>
                         {input.options.map((option) => (
@@ -101,6 +104,7 @@ const CommonForm = ({
                     key={input.label}
                     name={input.name}
                     rules={input.rules}
+                    hasFeedback
                 >
                     <InputNumber
                         placeholder={input.label}

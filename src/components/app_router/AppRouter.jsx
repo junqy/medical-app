@@ -22,7 +22,18 @@ function AppRouter(props) {
             </Header>
             <Content className={breakpoints.xs ? "content-small" : "content"}>
                 <Routes>
-                    <Route path="/" element={<Summary />} />
+                    <Route
+                        path="/"
+                        element={
+                            <Summary
+                                patients={props.patients}
+                                projects={props.projects}
+                                research={props.research}
+                                orders={props.orders}
+                                ordersResults={props.ordersResults}
+                            />
+                        }
+                    />
                     <Route
                         path="/patients"
                         element={
@@ -30,6 +41,10 @@ function AppRouter(props) {
                                 patients={props.patients}
                                 setPatients={props.setPatients}
                                 promptError={props.promptError}
+                                getAllOrders={props.getAllOrders}
+                                updatePatientsInProjects={
+                                    props.updatePatientsInProjects
+                                }
                             />
                         }
                     />
@@ -41,6 +56,7 @@ function AppRouter(props) {
                                 setProjects={props.setProjects}
                                 promptError={props.promptError}
                                 patients={props.patients}
+                                getAllOrders={props.getAllOrders}
                             />
                         }
                     />
@@ -51,10 +67,28 @@ function AppRouter(props) {
                                 research={props.research}
                                 setResearch={props.setResearch}
                                 promptError={props.promptError}
+                                orders={props.orders}
+                                ordersResults={props.ordersResults}
+                                setOrdersResults={props.setOrdersResults}
+                                getAllOrdersResults={props.getAllOrdersResults}
                             />
                         }
                     />
-                    <Route path="/orders" element={<Orders />} />
+                    <Route
+                        path="/orders"
+                        element={
+                            <Orders
+                                orders={props.orders}
+                                patients={props.patients}
+                                projects={props.projects}
+                                research={props.research}
+                                setOrders={props.setOrders}
+                                promptError={props.promptError}
+                                promptMessage={props.promptMessage}
+                                getAllOrdersResults={props.getAllOrdersResults}
+                            />
+                        }
+                    />
                 </Routes>
             </Content>
             <Footer style={{ textAlign: "center" }}>Test</Footer>

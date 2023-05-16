@@ -1,6 +1,6 @@
 import { Button, Select, Space } from "antd";
 import { useState } from "react";
-import { filterProject } from "../../utils/filterProject";
+import { filterData } from "../../utils/filterData";
 const { Option } = Select;
 
 function PatientsSelect({
@@ -13,7 +13,7 @@ function PatientsSelect({
     const [patientsToAdd, setPatientsToAdd] = useState([]);
 
     const handleAddPatients = () => {
-        const filteredProject = filterProject(projects, selectedProject);
+        const filteredProject = filterData(projects, selectedProject);
         addPatients({
             ...filteredProject,
             patients: [...filteredProject.patients, ...patientsToAdd],
@@ -32,7 +32,7 @@ function PatientsSelect({
             label={`${item.name} ${item.surname}`}
             key={item.key}
             disabled={
-                filterProject(projects, selectedProject).patients.includes(
+                filterData(projects, selectedProject).patients.includes(
                     String(item.id)
                 )
                     ? true

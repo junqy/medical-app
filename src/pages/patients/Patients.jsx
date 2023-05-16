@@ -12,7 +12,7 @@ import { serializePatient } from "../../utils/serializers/patientsSerializer";
 import errorHandler from "../../api/errorHandler";
 import { inputs } from "../../data/patientsData";
 
-function Patients({ patients, setPatients, promptError }) {
+function Patients({ patients, setPatients, promptError, getAllOrders, updatePatientsInProjects }) {
     const [formVisible, setFormVisible] = useState(false);
     const [formSubmited, setFormSubmited] = useState(false);
 
@@ -35,6 +35,8 @@ function Patients({ patients, setPatients, promptError }) {
                     (patient) => patient.id !== id
                 );
                 setPatients(patientsList);
+                getAllOrders();
+                updatePatientsInProjects(id)
             })
             .catch((err) => errorHandler(err, promptError));
     };

@@ -3,7 +3,7 @@ import CommonTable from "../common_table/CommonTable";
 import { DeleteFilled, CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import useColumnGenerator from "../../hooks/useColumnGenerator";
 import { patientsColumns } from "../../data/patientsData";
-import { filterProject } from "../../utils/filterProject";
+import { filterData } from "../../utils/filterData";
 import React, { useEffect, useState } from "react";
 
 function PatientsInProjectTable({
@@ -16,7 +16,7 @@ function PatientsInProjectTable({
     const [patientsData, setPatientsData] = useState([]);
 
     const filterPatients = () => {
-        const filteredProject = filterProject(projects, selectedProject);
+        const filteredProject = filterData(projects, selectedProject);
         const filteredPatients = patients?.filter((patient) =>
             filteredProject?.patients.includes(String(patient.id))
         );
@@ -32,7 +32,7 @@ function PatientsInProjectTable({
     };
 
     const handleAgreement = (id) => {
-        const filteredProject = filterProject(projects, selectedProject);
+        const filteredProject = filterData(projects, selectedProject);
         if (filteredProject?.agreedPatients.includes(String(id))) {
             const filteredPatients = filteredProject.agreedPatients.filter(
                 (item) => item !== String(id)
@@ -50,13 +50,17 @@ function PatientsInProjectTable({
     };
 
     const removeMembership = (id) => {
-        const filteredProject = filterProject(projects, selectedProject);
+        const filteredProject = filterData(projects, selectedProject);
         const filteredPatients = filteredProject.patients.filter(
+            (item) => item !== String(id)
+        );
+        const filteredPatientsAgreement = filteredProject.agreedPatients.filter(
             (item) => item !== String(id)
         );
         changeAgreement({
             ...filteredProject,
             patients: filteredPatients,
+            agreedPatients: filteredPatientsAgreement,
         });
     };
 
@@ -81,7 +85,7 @@ function PatientsInProjectTable({
                     <Button
                         shape="circle"
                         icon={
-                            filterProject(
+                            filterData(
                                 projects,
                                 selectedProject
                             )?.agreedPatients.includes(String(record.id)) ? (

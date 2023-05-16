@@ -15,10 +15,16 @@ import {
     serializeToFinish,
 } from "../../utils/serializers/projectsSerializer";
 import PatientsInProjectTable from "../../components/projects/PatientsInProjectTable";
-import { filterProject } from "../../utils/filterProject";
+import { filterData } from "../../utils/filterData";
 import PatientsSelect from "../../components/projects/PatientsSelect";
 
-function Projects({ projects, setProjects, promptError, patients }) {
+function Projects({
+    projects,
+    setProjects,
+    promptError,
+    patients,
+    getAllOrders,
+}) {
     const [formVisible, setFormVisible] = useState(false);
     const [formSubmited, setFormSubmited] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
@@ -43,6 +49,7 @@ function Projects({ projects, setProjects, promptError, patients }) {
                     (project) => project.id !== id
                 );
                 setProjects(projectsList);
+                getAllOrders();
             })
             .catch((err) => errorHandler(err, promptError));
     };
@@ -83,7 +90,7 @@ function Projects({ projects, setProjects, promptError, patients }) {
                     )
                 );
                 setSelectedProject(response.data.id);
-                setSelectVisible(false)
+                setSelectVisible(false);
             })
             .catch((err) => errorHandler(err, promptError));
     };
@@ -155,7 +162,7 @@ function Projects({ projects, setProjects, promptError, patients }) {
                     <>
                         <Col span={24}>
                             <Divider>
-                                {filterProject(projects, selectedProject).name}
+                                {filterData(projects, selectedProject).name}
                             </Divider>
                         </Col>
                         <Col span={24}>
@@ -184,13 +191,13 @@ function Projects({ projects, setProjects, promptError, patients }) {
                         {selectVisible && (
                             <Col span={24}>
                                 <Card title="Dodaj pacjentów">
-                                <PatientsSelect
-                                    patients={patients}
-                                    placeholder={"Wybierz pacjentów"}
-                                    addPatients={addPatientToProject}
-                                    projects={projects}
-                                    selectedProject={selectedProject}
-                                />
+                                    <PatientsSelect
+                                        patients={patients}
+                                        placeholder={"Wybierz pacjentów"}
+                                        addPatients={addPatientToProject}
+                                        projects={projects}
+                                        selectedProject={selectedProject}
+                                    />
                                 </Card>
                             </Col>
                         )}
