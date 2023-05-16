@@ -8,6 +8,12 @@
 git clone https://github.com/junqy/recruitment-medical-app.git
 ```
 
+### Przejście do katalogu aplikacji
+
+```
+cd recruitment-medical-app
+```
+
 ### Instalacja pakietów
 
 ```
