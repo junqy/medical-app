@@ -156,13 +156,14 @@ function Projects({
                         formSubmited={formSubmited}
                         setFormSubmited={setFormSubmited}
                         setSelectedProject={setSelectedProject}
+                        selectedProject={selectedProject}
                     />
                 </Col>
                 {!!selectedProject && (
                     <>
                         <Col span={24}>
                             <Divider>
-                                {filterData(projects, selectedProject).name}
+                                {filterData(projects, selectedProject)?.name}
                             </Divider>
                         </Col>
                         <Col span={24}>

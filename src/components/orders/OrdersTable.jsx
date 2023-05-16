@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CommonTable from "../common_table/CommonTable";
 import useColumnGenerator from "../../hooks/useColumnGenerator";
 import { Space, Button, Modal } from "antd";
@@ -24,10 +24,10 @@ function OrdersTable({
     setFormSubmited,
     editOrder,
     finishOrder,
-    setSelectedOrder
+    setSelectedOrder,
+    selectedOrder,
 }) {
     const generateColumns = useColumnGenerator();
-    const [data, setData] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editItem, setEditItem] = useState(null);
 
@@ -42,36 +42,35 @@ function OrdersTable({
     };
 
     const assembleData = () => {
-        setData(
-            orders.map((order) => ({
-                ...order,
-                projectName: projects.find(
-                    (project) => String(project.id) === order.projectId
-                )?.name,
-                patientName: `${
-                    patients.find(
-                        (patient) => String(patient.id) === order.patientId
-                    )?.name
-                } ${
-                    patients.find(
-                        (patient) => String(patient.id) === order.patientId
-                    )?.surname
-                }`,
-            }))
-        );
+        const data = orders.map((order) => ({
+            ...order,
+            projectName: projects.find(
+                (project) => String(project.id) === order.projectId
+            )?.name,
+            patientName: `${
+                patients.find(
+                    (patient) => String(patient.id) === order.patientId
+                )?.name
+            } ${
+                patients.find(
+                    (patient) => String(patient.id) === order.patientId
+                )?.surname
+            }`,
+        }));
+
+        return data;
     };
 
     const handleDelete = (data) => {
         if (data.isFinished) {
             promptMessage("Nie można wycofać ukończonego zlecenia.");
         } else {
+            if (data.id === selectedOrder) {
+                setSelectedOrder(null);
+            }
             removeOrder(data.id);
         }
     };
-
-    useEffect(() => {
-        assembleData();
-    }, [projects, patients, orders]);
 
     const columns = [
         ...generateColumns(ordersColumns),
@@ -113,7 +112,7 @@ function OrdersTable({
     ];
     return (
         <>
-            <CommonTable data={data} columns={columns} />
+            <CommonTable data={assembleData()} columns={columns} />
             <Modal
                 open={isModalOpen}
                 title="Edytuj dane projektu"

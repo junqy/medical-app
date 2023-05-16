@@ -4,7 +4,7 @@ import { DeleteFilled, CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import useColumnGenerator from "../../hooks/useColumnGenerator";
 import { patientsColumns } from "../../data/patientsData";
 import { filterData } from "../../utils/filterData";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 function PatientsInProjectTable({
     patients,
@@ -13,7 +13,6 @@ function PatientsInProjectTable({
     projects,
 }) {
     const generateColumns = useColumnGenerator();
-    const [patientsData, setPatientsData] = useState([]);
 
     const filterPatients = () => {
         const filteredProject = filterData(projects, selectedProject);
@@ -28,7 +27,7 @@ function PatientsInProjectTable({
                     ? true
                     : false)
         );
-        setPatientsData(filteredPatients);
+        return filteredPatients;
     };
 
     const handleAgreement = (id) => {
@@ -63,10 +62,6 @@ function PatientsInProjectTable({
             agreedPatients: filteredPatientsAgreement,
         });
     };
-
-    useEffect(() => {
-        filterPatients();
-    }, [selectedProject, changeAgreement]);
 
     const columns = [
         ...generateColumns(patientsColumns),
@@ -110,7 +105,7 @@ function PatientsInProjectTable({
     return (
         <>
             <CommonTable
-                data={patientsData}
+                data={filterPatients()}
                 columns={columns}
                 isAgreement={true}
             />

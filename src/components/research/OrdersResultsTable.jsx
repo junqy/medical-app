@@ -1,32 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import CommonTable from '../common_table/CommonTable'
-import { ordersResultsColumns } from '../../data/ordersResultsData';
+import React from "react";
+import CommonTable from "../common_table/CommonTable";
+import { ordersResultsColumns } from "../../data/ordersResultsData";
 import useColumnGenerator from "../../hooks/useColumnGenerator";
-import { DeleteFilled } from '@ant-design/icons';
-import { Button, Space } from 'antd';
+import { DeleteFilled } from "@ant-design/icons";
+import { Button, Space } from "antd";
 
-
-
-function OrdersResultsTable({research, ordersResults, removeOrderResult}) {
+function OrdersResultsTable({ research, ordersResults, removeOrderResult }) {
     const generateColumns = useColumnGenerator();
-    const [data, setData] = useState([]);
 
-    
     const assembleData = () => {
-        setData(
-            ordersResults.map((orderResult) => ({
-                ...orderResult,
-                researchName: research.find(
-                    (research) => String(research.id) === orderResult.researchId
-                )?.name,
-            }))
-        );
+        const data = ordersResults.map((orderResult) => ({
+            ...orderResult,
+            researchName: research.find(
+                (research) => String(research.id) === orderResult.researchId
+            )?.name,
+        }));
+
+        return data
     };
-
-    useEffect(() => {
-        assembleData();
-    }, [ordersResults, research])
-
 
     const columns = [
         ...generateColumns(ordersResultsColumns),
@@ -46,11 +37,11 @@ function OrdersResultsTable({research, ordersResults, removeOrderResult}) {
         },
     ];
 
-  return (
-    <>
-        <CommonTable data={data} columns={columns}/>
-    </>
-  )
+    return (
+        <>
+            <CommonTable data={assembleData()} columns={columns} />
+        </>
+    );
 }
 
-export default OrdersResultsTable
+export default OrdersResultsTable;

@@ -1,8 +1,8 @@
 import CommonTable from "../common_table/CommonTable";
 import useColumnGenerator from "../../hooks/useColumnGenerator";
 import { filterData } from "../../utils/filterData";
-import React, { useEffect, useState } from "react";
 import { researchColumns } from "../../data/researchData";
+import React from "react";
 
 function OrderResearchTable({
     research,
@@ -10,19 +10,15 @@ function OrderResearchTable({
     orders,
 }) {
     const generateColumns = useColumnGenerator();
-    const [researchData, setResearchData] = useState([]);
 
-    const filterOrders = () => {
+    const filterOrderResearch = () => {
         const filteredOrder = filterData(orders, selectedOrder);
         const filteredResearch = research?.filter((research) =>
             filteredOrder?.research.includes(String(research.id))
         );
-        setResearchData(filteredResearch);
-    };
 
-    useEffect(() => {
-        filterOrders();
-    }, [selectedOrder]);
+        return filteredResearch
+    };
 
     const columns = [
         ...generateColumns(researchColumns),
@@ -31,7 +27,7 @@ function OrderResearchTable({
     return (
         <>
             <CommonTable
-                data={researchData}
+                data={filterOrderResearch()}
                 columns={columns}
             />
         </>

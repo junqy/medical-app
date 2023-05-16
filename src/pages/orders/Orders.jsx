@@ -129,6 +129,7 @@ function Orders({
                         formSubmited={formSubmited}
                         setFormSubmited={setFormSubmited}
                         setSelectedOrder={setSelectedOrder}
+                        selectedOrder={selectedOrder}
                     />
                 </Col>
                 {!!selectedOrder && (

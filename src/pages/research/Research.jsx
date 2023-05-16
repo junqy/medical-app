@@ -25,7 +25,8 @@ function Research({
     orders,
     getAllOrdersResults
 }) {
-    const [formVisible, setFormVisible] = useState(false);
+    const [researchFormVisible, setResearchFormVisible] = useState(false);
+    const [ordersResultsFormVisible, setOrdersResultsFormVisible] = useState(false);
     const [formSubmited, setFormSubmited] = useState(false);
 
     const removeResearch = async (id) => {
@@ -47,7 +48,7 @@ function Research({
                 const allResearch = [...research, response.data];
                 setResearch(allResearch);
                 setFormSubmited(true);
-                setFormVisible(false);
+                setResearchFormVisible(false);
             })
             .catch((err) => errorHandler(err, promptError));
     };
@@ -74,7 +75,7 @@ function Research({
                 const allOrdersResults = [...ordersResults, response.data];
                 setOrdersResults(allOrdersResults);
                 setFormSubmited(true);
-                setFormVisible(false);
+                setOrdersResultsFormVisible(false);
             })
             .catch((err) => errorHandler(err, promptError));
     };
@@ -102,19 +103,19 @@ function Research({
                     >
                         <Button
                             icon={
-                                formVisible ? (
+                                researchFormVisible ? (
                                     <CloseOutlined />
                                 ) : (
                                     <PlusOutlined />
                                 )
                             }
-                            onClick={() => setFormVisible(!formVisible)}
+                            onClick={() => setResearchFormVisible(!researchFormVisible)}
                         >
-                            {formVisible ? "Anuluj" : "Dodaj"}
+                            {researchFormVisible ? "Anuluj" : "Dodaj"}
                         </Button>
                     </div>
                 </Col>
-                {formVisible && (
+                {researchFormVisible && (
                     <Col span={24}>
                         <Card title="Badanie" style={{ width: "100%" }}>
                             <CommonForm
@@ -148,19 +149,19 @@ function Research({
                     >
                         <Button
                             icon={
-                                formVisible ? (
+                                ordersResultsFormVisible ? (
                                     <CloseOutlined />
                                 ) : (
                                     <PlusOutlined />
                                 )
                             }
-                            onClick={() => setFormVisible(!formVisible)}
+                            onClick={() => setOrdersResultsFormVisible(!ordersResultsFormVisible)}
                         >
-                            {formVisible ? "Anuluj" : "Dodaj"}
+                            {ordersResultsFormVisible ? "Anuluj" : "Dodaj"}
                         </Button>
                     </div>
                 </Col>
-                {formVisible && (
+                {ordersResultsFormVisible && (
                     <Col span={24}>
                         <Card title="Zlecenie" style={{ width: "100%" }}>
                             <OrderResultForm

@@ -22,6 +22,7 @@ function ProjectsTable({
     formSubmited,
     setFormSubmited,
     setSelectedProject,
+    selectedProject
 }) {
     const generateColumns = useColumnGenerator();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,6 +37,13 @@ function ProjectsTable({
         setEditItem(null);
         setIsModalOpen(false);
     };
+
+    const handleRemove = (id) => {
+        if (id === selectedProject) {
+            setSelectedProject(null)
+        }
+        removeProject(id)
+    }
 
     const columns = [
         ...generateColumns(projectsColumns),
@@ -69,7 +77,7 @@ function ProjectsTable({
                         danger
                         shape="circle"
                         icon={<DeleteFilled />}
-                        onClick={() => removeProject(record.id)}
+                        onClick={() => handleRemove(record.id)}
                     />
                 </Space>
             ),

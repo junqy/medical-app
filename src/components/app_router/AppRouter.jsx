@@ -8,6 +8,7 @@ import Patients from "../../pages/patients/Patients";
 import Projects from "../../pages/projects/Projects";
 import Research from "../../pages/research/Research";
 import Orders from "../../pages/orders/Orders";
+import FooterContent from "../footer/FooterContent";
 
 const { useBreakpoint } = Grid;
 const { Header, Content, Footer } = Layout;
@@ -91,7 +92,7 @@ function AppRouter(props) {
                     />
                 </Routes>
             </Content>
-            <Footer style={{ textAlign: "center" }}>Test</Footer>
+            <Footer style={{ textAlign: "center" }}><FooterContent /></Footer>
         </Layout>
     );
 }
