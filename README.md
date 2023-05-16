@@ -28,6 +28,8 @@ npm run dev
 
 ## Uruchomienie serwera danych (json-server)
 
+### W katalogu `recruitment-medical-app`
+
 ```
 $ json-server --watch ./data/db.json
 ```
