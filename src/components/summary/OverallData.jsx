@@ -55,7 +55,7 @@ function OverallData({ patients, projects, research, orders, ordersResults }) {
                                 left: 80,
                             }}
                             innerRadius={0.1}
-                            padAngle={0.7}
+                            padAngle={2}
                             cornerRadius={3}
                             activeOuterRadiusOffset={8}
                             borderWidth={1}
@@ -69,10 +69,7 @@ function OverallData({ patients, projects, research, orders, ordersResults }) {
                             arcLinkLabelsThickness={2}
                             arcLinkLabelsColor={{ from: "color" }}
                             arcLabelsSkipAngle={10}
-                            arcLabelsTextColor={{
-                                from: "color",
-                                modifiers: [["darker", 2]],
-                            }}
+                            arcLabelsTextColor="#ffffff"
                             defs={[
                                 {
                                     id: "dots",
@@ -93,38 +90,7 @@ function OverallData({ patients, projects, research, orders, ordersResults }) {
                                     spacing: 10,
                                 },
                             ]}
-                            fill={[
-                                {
-                                    match: {
-                                        id: "patients",
-                                    },
-                                    id: "dots",
-                                },
-                                {
-                                    match: {
-                                        id: "projects",
-                                    },
-                                    id: "dots",
-                                },
-                                {
-                                    match: {
-                                        id: "research",
-                                    },
-                                    id: "dots",
-                                },
-                                {
-                                    match: {
-                                        id: "orders",
-                                    },
-                                    id: "dots",
-                                },
-                                {
-                                    match: {
-                                        id: "ordersResults",
-                                    },
-                                    id: "lines",
-                                },
-                            ]}
+                            
                         />
                     </div>
             </Col>
