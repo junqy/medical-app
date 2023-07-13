@@ -1,34 +1,34 @@
 # Medical App
 
-## Uruchomienie aplikacji
+## App Startup
 
-### Pobranie repozytorium
+### Clone repo
 
 ```
 git clone https://github.com/junqy/recruitment-medical-app.git
 ```
 
-### Przejście do katalogu aplikacji
+### App folder
 
 ```
 cd recruitment-medical-app
 ```
 
-### Instalacja pakietów
+### Install packages
 
 ```
 npm install
 ```
 
-### Uruchomienie aplikacji
+### Run application
 
 ```
 npm run dev
 ```
 
-## Uruchomienie serwera danych (json-server)
+## Run data server (json-server)
 
-### W katalogu `recruitment-medical-app`
+### In folder `recruitment-medical-app`
 
 ```
 $ json-server --watch ./data/db.json
