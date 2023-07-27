@@ -28,7 +28,7 @@ npm run dev
 
 ## Run data server (json-server)
 
-### In folder `recruitment-medical-app`
+### In folder `medical-app`
 
 ```
 $ json-server --watch ./data/db.json
