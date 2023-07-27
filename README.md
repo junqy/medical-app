@@ -11,7 +11,7 @@ git clone https://github.com/junqy/recruitment-medical-app.git
 ### App folder
 
 ```
-cd recruitment-medical-app
+cd medical-app
 ```
 
 ### Install packages
